@@ -16,18 +16,20 @@ body{margin:0;font-family:Arial,sans-serif;background:#f4f6fa;color:#202735}
 header{margin-bottom:24px}
 .logo{font-size:29px;font-weight:800;letter-spacing:-1px}
 .logo span{color:#e53935}
-.subtitle{color:#697386;margin-top:7px;font-size:14px}
+.subtitle{color:#667085;margin-top:7px;font-size:14px}
 .layout{display:grid;grid-template-columns:1fr 1fr;gap:18px}
 .card{background:white;border-radius:15px;padding:22px;box-shadow:0 4px 18px #1e2d460d;min-width:0}
 h2{font-size:17px;margin:0 0 20px}
 .field{margin-bottom:15px}
 label{display:block;font-size:13px;color:#596477;margin-bottom:7px}
-input,select{width:100%;padding:11px 12px;border:1px solid #dce1e9;border-radius:9px;font-size:15px;background:white;color:#202735}
-input:focus,select:focus{outline:2px solid #e5393530;border-color:#e53935}
+input,select{width:100%;padding:11px 12px;border:1px solid #8591a1;border-radius:9px;font-size:15px;background:white;color:#202735}
+input:focus,select:focus{outline:3px solid #cf302c24;outline-offset:1px;border-color:#c9322e}
+input::placeholder{color:#667085;opacity:1}
+button:focus-visible{outline:2px solid #c9322e;outline-offset:2px}
 .input-wrap{position:relative}
 .input-wrap input{padding-right:44px}
-.unit{position:absolute;right:12px;top:12px;color:#8992a1;font-size:13px}
-input[readonly]{background:#f5f6f8}
+.unit{position:absolute;right:12px;top:12px;color:#667085;font-size:13px}
+input[readonly]{background:#f1f3f6;border-color:#c8cfd8;font-weight:600}
 .result-main{background:#f0f8f2;border-radius:12px;padding:17px;margin-bottom:15px}
 .result-label{color:#55705d;font-size:13px}
 .profit{font-size:32px;font-weight:800;margin-top:8px;color:#168348;overflow-wrap:anywhere}
@@ -35,25 +37,26 @@ input[readonly]{background:#f5f6f8}
 .status{font-size:13px;margin-top:10px;font-weight:600}
 .stats{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .stat{background:#f6f7fa;border-radius:10px;padding:13px}
-.stat-label{color:#697386;font-size:12px;margin-bottom:7px}
-.stat-value{font-size:18px;font-weight:700;overflow-wrap:anywhere}
+.stat-label{color:#667085;font-size:12px;margin-bottom:7px}
+.stat-value{color:#202735;font-size:18px;font-weight:700;overflow-wrap:anywhere}
 .divider{border:0;border-top:1px solid #edf0f4;margin:20px 0}
 .target-box{background:#fff7ed;border-radius:12px;padding:16px;margin-top:18px}
 .target-box h3{font-size:15px;margin:0 0 14px}
-.target-result{font-size:13px;color:#7c4a12;line-height:1.5}
-.target-price{font-size:24px;font-weight:800;margin:5px 0}
-.buttons{display:flex;gap:9px;flex-wrap:wrap;margin-top:18px}
-button{border:0;border-radius:9px;padding:12px 15px;font-size:14px;font-weight:700;cursor:pointer}
-.primary{background:#e53935;color:white}
-.primary:hover{background:#c92f2c}
-.secondary{background:#edf0f5;color:#344054}
+.target-result{font-size:13px;color:#667085;line-height:1.5}
+.target-price{color:#202735;font-size:24px;font-weight:800;margin:5px 0}
+.buttons{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+button{border:0;border-radius:9px;padding:12px 15px;font-size:14px;font-weight:600;cursor:pointer}
+.primary{background:#cf302c;color:#fff}
+.primary:hover{background:#b72c29}
+.secondary{background:#eef1f5;color:#344054;box-shadow:inset 0 0 0 1px #a3adbb}
+.secondary:hover{background:#e2e7ee}
 .danger{background:#fff0ef;color:#c92f2c}
 button:disabled{opacity:.5;cursor:not-allowed}
-.note{font-size:12px;color:#778092;line-height:1.5;margin-top:16px}
+.note{font-size:12px;color:#667085;line-height:1.5;margin-top:8px}
 .section{margin-top:22px}
 .section-head{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:12px}
 .section-head h2{margin:0}
-.count{color:#697386;font-size:13px}
+.count{color:#667085;font-size:13px}
 .table-wrap{overflow-x:auto;background:white;border-radius:13px;box-shadow:0 4px 18px #1e2d460d}
 table{width:100%;border-collapse:collapse;min-width:760px}
 th,td{padding:13px 14px;text-align:left;border-bottom:1px solid #edf0f4;font-size:13px;white-space:nowrap}
@@ -63,17 +66,17 @@ td:first-child{font-weight:700;white-space:normal;min-width:145px}
 .profit-cell{font-weight:700;color:#168348}
 .row-actions{display:flex;gap:6px}
 .small-btn{padding:7px 9px;font-size:12px}
-.empty{text-align:center;color:#778092;padding:28px;background:white;border-radius:13px}
-.tax-info{font-size:13px;color:#596477;line-height:1.5;margin-top:12px}
+.empty{text-align:center;color:#667085;padding:28px;background:white;border-radius:13px}
+.tax-info{font-size:12px;color:#667085;line-height:1.5;margin-top:12px}
 .backup-ok{color:#168348}
 .backup-error{color:#c92f2c}
 
 .monthly-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
 .monthly-box{background:#fff;border-radius:15px;padding:20px;box-shadow:0 4px 18px #1e2d460d}
 .monthly-box h3{font-size:16px;margin:0 0 15px}
-.monthly-highlight{background:#f0f8f2;border-radius:12px;padding:15px;margin-top:14px}
+.monthly-highlight{background:#f0f8f2;border-radius:12px;padding:12px;margin-top:10px}
 .monthly-highlight.orange{background:#fff7ed}
-.monthly-label{font-size:12px;color:#697386}
+.monthly-label{font-size:12px;color:#667085}
 .monthly-value{font-size:26px;font-weight:800;margin-top:6px}
 .monthly-value.green{color:#168348}
 .monthly-value.orange-text{color:#9a5b12}
@@ -86,7 +89,7 @@ td:first-child{font-weight:700;white-space:normal;min-width:145px}
 button{min-height:44px;touch-action:manipulation}
 input,select{min-height:46px}
 @media(max-width:760px){
- body{background:#f3f5f9}
+ body{background:#f5f6f8}
  .container{padding:16px 12px 32px}
  header{margin-bottom:18px}
  .logo{font-size:27px}
@@ -94,12 +97,12 @@ input,select{min-height:46px}
  .layout,.monthly-grid{gap:14px}
  .card,.monthly-box{padding:18px;border-radius:14px}
  h2{font-size:18px;margin-bottom:18px}
- .field{margin-bottom:17px}
+ .field{margin-bottom:12px}
  label{font-size:14px}
  input,select{font-size:16px;min-height:49px;padding:12px 13px}
- .unit{top:16px}
- .buttons{display:grid;grid-template-columns:1fr;gap:9px}
- .buttons button{width:100%;min-height:49px;font-size:15px}
+ .unit{top:50%;transform:translateY(-50%)}
+ .buttons{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+ .buttons button{width:100%;min-height:44px;font-size:13px;padding:8px 6px}
  .result-main{padding:19px}
  .profit{font-size:34px}
  .stat{padding:12px 10px}
@@ -112,7 +115,7 @@ input,select{min-height:46px}
  thead{display:none}
  tbody tr{display:block;background:#fff;border-radius:14px;margin-bottom:12px;padding:13px 16px;box-shadow:0 4px 18px #1e2d460d}
  tbody td{display:flex;align-items:baseline;justify-content:space-between;gap:12px;white-space:normal;padding:9px 0;border-bottom:1px solid #edf0f4;font-size:14px;text-align:right;overflow-wrap:anywhere}
- tbody td::before{content:attr(data-label);font-size:12px;color:#697386;font-weight:400;text-align:left;flex:0 0 42%}
+ tbody td::before{content:attr(data-label);font-size:12px;color:#667085;font-weight:400;text-align:left;flex:0 0 42%}
  tbody td:first-child{display:block;text-align:left;font-size:17px;font-weight:800;min-width:0;padding:5px 0 13px}
  tbody td:first-child::before{display:block;content:'Товар';margin-bottom:5px}
  tbody td:nth-child(6){font-size:18px;font-weight:800}
@@ -121,53 +124,57 @@ input,select{min-height:46px}
  .row-actions{display:grid;grid-template-columns:1fr 1fr;gap:9px}
  .small-btn{min-height:44px;font-size:14px}
 }
-/* Сворачиваемые разделы: видны заголовки, параметры открываются по нажатию */
+/* Компактные разделы с нативным управлением details/summary. */
+.secondary-sections{background:#fff;border:1px solid #e6e9ee;border-radius:14px;overflow:hidden}
 .fold{min-width:0}
-.fold > summary{list-style:none;display:flex;align-items:center;justify-content:space-between;gap:10px;cursor:pointer;font-size:16px;font-weight:750;line-height:1.3;min-height:48px;touch-action:manipulation}
+.fold > summary{color:#202735;list-style:none;display:flex;align-items:center;gap:12px;cursor:pointer;font-size:14px;font-weight:600;line-height:1.4;min-height:44px;touch-action:manipulation}
 .fold > summary::-webkit-details-marker{display:none}
-.fold > summary::after{content:"⌄";color:#697386;font-size:23px;line-height:1;flex:none;transition:transform .15s ease}
-.fold[open] > summary::after{transform:rotate(180deg)}
-.fold > summary:focus-visible{outline:2px solid #e53935;outline-offset:4px;border-radius:6px}
-.fold > .fold-body{padding-top:16px}
-.fold-settings{background:#f6f7fa;border:1px solid #e7eaf1;border-radius:12px;padding:3px 15px;margin-bottom:16px}
-.fold-settings > summary{font-size:15px}
-.fold-settings .fold-body{border-top:1px solid #e3e7ef}
-.fold-hint{margin-left:auto;font-weight:400;font-size:12px;color:#697386}
-.fold-target > summary{min-height:26px;font-size:15px}
-.fold-target > .fold-body{padding-top:17px}
-.fold-monthly > summary{font-size:16px}
-.fold-monthly > .fold-body{padding-top:18px}
-.fold-products{background:#fff;border-radius:14px;box-shadow:0 4px 18px #1e2d460d;padding:6px 20px 18px}
-.fold-products > summary{font-size:17px}
-.fold-products > .fold-body{padding-top:10px}
-.fold-products .count{font-weight:400;margin-left:auto}
+.fold > summary::after{content:"";width:7px;height:7px;border-right:1.5px solid #7a8492;border-bottom:1.5px solid #7a8492;transform:rotate(45deg);margin:-4px 3px 0 auto;flex:none;transition:transform .15s ease}
+.fold[open] > summary::after{transform:rotate(225deg);margin-top:4px}
+.fold > summary:focus-visible{outline:2px solid #e53935;outline-offset:-2px;border-radius:6px}
+.fold > .fold-body{padding:8px 0 12px}
+.fold-group{padding:0 14px;border-bottom:1px solid #edf0f4}
+.fold-group:last-child{border-bottom:0}
+.fold-group > summary{min-height:48px;font-size:15px}
+.fold-group[open] > summary{border-bottom:1px solid #edf0f4}
+.fold-settings,.fold-expenses,.fold-monthly,.fold-target{padding:0;margin:0;border:0;border-radius:0;background:transparent;box-shadow:none}
+.fold-settings,.fold-expenses{border:1px solid #dce1e7;border-radius:8px;padding:0 10px;margin-bottom:10px}
+.fold-settings > summary,.fold-expenses > summary{background:#f3f5f7;margin:0 -10px;padding:0 10px;border-radius:7px}
+.fold-settings[open] > summary,.fold-expenses[open] > summary{border-bottom:1px solid #dce1e7;border-radius:7px 7px 0 0}
+.fold-settings > .fold-body,.fold-expenses > .fold-body{padding:10px 0}
+.fold-expenses{margin:12px 0 0}
+.fold-products .count{font-weight:400;font-size:12px;margin-left:auto;color:#667085}
+.fold-products > summary::after{margin-left:0}
 .fold-products .table-wrap{box-shadow:none}
-@media(max-width:760px){
- .fold > summary{min-height:48px}
- .fold-settings{padding:4px 13px}
- .fold-products{padding:6px 16px 12px}
- .fold-products .table-wrap tbody tr{border:1px solid #edf0f4;box-shadow:none}
- .fold-products .count{font-size:12px}
- .monthly-box{padding:12px 18px}
-}
+.fold-products .table-wrap tbody tr{border:1px solid #edf0f4;box-shadow:none}
+.monthly-grid{display:block}
+.fold-monthly,.fold-target{border-top:1px solid #edf0f4}
+#monthlyProductsInfo{margin:2px 0 8px;font-size:12px}
+.excel-tools{border-top:1px solid #edf0f4;margin-top:12px;padding-top:2px}
+@media(prefers-reduced-motion:reduce){.fold > summary::after{transition:none}}
 /* Быстрый расчёт: те же поля и единая функция calculateAtPrice. */
-.quick-card{margin-bottom:18px}
+.quick-card{margin-bottom:12px;box-shadow:none;border:1px solid #e6e9ee;padding:14px}
 .quick-inputs{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px}
 .quick-inputs label{font-size:15px;font-weight:700}
-.quick-inputs input{font-size:clamp(22px,6vw,32px);font-weight:700;min-height:64px;padding:12px;width:100%}
+.quick-inputs input{font-size:clamp(22px,6vw,32px);font-weight:700;min-height:56px;padding:10px;width:100%}
 .quick-inputs .input-wrap input{padding-right:12px}
-.quick-card .result-main{margin:0}
+.quick-card .result-main{margin:0;padding:14px;background:#f0f7f2}
 .quick-card .result-label{font-size:16px}
+.quick-card .status{font-size:12px;font-weight:600;color:#475467;margin-top:6px}
+.status:empty{display:none}
+.profit.zero{color:#202735}
+#targetDetails{font-size:12px;color:#667085}
+tbody td:not(:first-child):not(:last-child){font-weight:600}
 .quick-card .profit{font-size:clamp(32px,8vw,46px);line-height:1.15;font-variant-numeric:tabular-nums}
-.quick-margin{font-size:18px;color:#55705d;margin-top:12px}
+.quick-margin{font-size:16px;color:#55705d;margin-top:8px}
 .quick-margin strong{color:#202735;font-size:24px;margin-left:8px}
 .card.fold{align-self:start}
 @media(max-width:760px){
  .container{padding:12px 12px calc(24px + env(safe-area-inset-bottom,0px))}
  header{margin-bottom:14px}.subtitle{display:none}
- .quick-card{padding:16px;margin-bottom:14px}
- .quick-inputs{gap:10px}.quick-inputs .field{margin-bottom:14px}
- .quick-card .result-main{padding:16px}
+ .quick-card{padding:14px;margin-bottom:12px}
+ .quick-inputs{gap:10px}.quick-inputs .field{margin-bottom:12px}
+ .quick-card .result-main{padding:12px}
  .card.fold{padding:6px 16px 12px}
 }
 </style>
@@ -196,8 +203,8 @@ input,select{min-height:46px}
 </div>
 </section>
 
-<div class="layout">
-<details class="card fold"><summary>Товар и параметры расчёта</summary><div class="fold-body">
+<div class="secondary-sections">
+<details class="fold fold-group" id="calculationSettings"><summary>Параметры расчёта</summary><div class="fold-body">
 
 <div class="field">
 <label for="product">Название товара</label>
@@ -209,7 +216,7 @@ input,select{min-height:46px}
 
 
 <details class="fold fold-settings">
-<summary>Комиссия и доставка <span class="fold-hint">Настроить</span></summary>
+<summary>Комиссия и доставка</summary>
 <div class="fold-body">
 <div class="field">
 <label for="commission">Комиссия Kaspi</label>
@@ -259,18 +266,7 @@ input,select{min-height:46px}
 <button class="secondary" id="newBtn">Новый товар</button>
 </div>
 <div class="note" id="saveMessage">Сохранённые товары хранятся в этом браузере на этом устройстве.</div>
-<div class="buttons" style="margin-top:12px">
-  <button class="secondary" id="exportExcelBtn">Экспорт в Excel</button>
-  <button class="secondary" id="importExcelBtn">Импорт из Excel</button>
-  <input id="importExcelInput" type="file" accept=".xlsx,.xls" style="display:none">
-</div>
-<div class="note" id="backupMessage">
-  Excel-файл содержит весь сохранённый ассортимент. При импорте данные проходят проверку перед добавлением.
-</div>
-
-</div></details>
-
-<details class="card fold"><summary>Расходы и желаемая прибыль</summary><div class="fold-body">
+<details class="fold fold-expenses"><summary>Расшифровка расходов</summary><div class="fold-body">
 
 
 
@@ -283,33 +279,35 @@ input,select{min-height:46px}
 <div class="stat"><div class="stat-label">Наценка на закупку</div><div class="stat-value" id="markup">—</div></div>
 </div>
 
-<details class="target-box fold fold-target">
-<summary>Цена для желаемой прибыли</summary>
-<div class="fold-body">
-<div class="field">
-<label for="target">Сколько хочешь зарабатывать с продажи</label>
-<div class="input-wrap"><input id="target" type="number" inputmode="decimal" min="0" step="1" value="3000"><span class="unit">₸</span></div>
-</div>
-<div class="target-result">
-Минимальная рекомендуемая цена:
-<div class="target-price" id="targetPrice">—</div>
-<div id="targetDetails">Учитывает комиссию, доставку и налоговый резерв.</div>
-</div>
-</div>
-</details>
+
 
 <div class="tax-info">
 Налоговый резерв рассчитан как 3% от цены продажи, а не от прибыли. Это предварительная модель для выбранной ставки и налогового режима. Проверь ставку и правила применения своего налогового режима.
 </div>
 <div class="note">Расчёт включает только указанные расходы. Возвраты, скидки и прочие затраты нужно учитывать отдельно, если они применимы.</div>
 </div></details>
+</div></details>
+<details class="fold fold-group fold-products" id="savedProducts">
+<summary>Мои товары <span class="count" id="count">0 товаров</span></summary>
+<div class="fold-body">
+<div id="productsArea"></div>
+<div class="note">Нажми «Открыть», чтобы загрузить товар в калькулятор. После изменения нажми «Сохранить товар», чтобы обновить его данные.</div>
+<div class="excel-tools" aria-label="Обмен Excel">
+<div class="buttons" style="margin-top:12px">
+  <button class="secondary" id="exportExcelBtn">Экспорт в Excel</button>
+  <button class="secondary" id="importExcelBtn">Импорт из Excel</button>
+  <input id="importExcelInput" type="file" accept=".xlsx,.xls" style="display:none">
 </div>
-
-<div class="section">
-<div class="section-head">
-<h2>Финансы за месяц</h2>
+<div class="note" id="backupMessage">
+  Excel-файл содержит весь сохранённый ассортимент. При импорте данные проходят проверку перед добавлением.
+</div>
+</div>
+</div>
+</details>
+<details class="fold fold-group" id="financeGoals">
+<summary>Финансы и цели</summary>
+<div class="fold-body">
 <div class="count" id="monthlyProductsInfo">По сохранённому ассортименту</div>
-</div>
 <div class="monthly-grid">
   <details class="monthly-box fold fold-monthly">
     <summary>Факт за месяц</summary>
@@ -349,15 +347,23 @@ input,select{min-height:46px}
     </div>
   </details>
 </div>
-</div>
-
-<details class="section fold fold-products">
-<summary>Мои товары <span class="count" id="count">0 товаров</span></summary>
+<details class="target-box fold fold-target">
+<summary>Цена для желаемой прибыли</summary>
 <div class="fold-body">
-<div id="productsArea"></div>
-<div class="note">Нажми «Открыть», чтобы загрузить товар в калькулятор. После изменения нажми «Сохранить товар», чтобы обновить его данные.</div>
+<div class="field">
+<label for="target">Сколько хочешь зарабатывать с продажи</label>
+<div class="input-wrap"><input id="target" type="number" inputmode="decimal" min="0" step="1" value="3000"><span class="unit">₸</span></div>
+</div>
+<div class="target-result">
+Минимальная рекомендуемая цена:
+<div class="target-price" id="targetPrice">—</div>
+<div id="targetDetails">Учитывает комиссию, доставку и налоговый резерв.</div>
+</div>
 </div>
 </details>
+</div>
+</details>
+</div>
 </div>
 
 <script>
@@ -445,6 +451,7 @@ function calculate() {
 
   $("profit").textContent = money(result.profit);
   $("profit").classList.toggle("negative", result.profit < 0);
+  $("profit").classList.toggle("zero", result.profit === 0);
   $("commissionSum").textContent = money(result.commission);
   $("taxSum").textContent = money(result.tax);
   $("deliverySum").textContent = money(result.delivery);
@@ -456,7 +463,7 @@ function calculate() {
   $("status").textContent = data.sale <= 0
     ? "Укажи цену продажи"
     : result.profit > 0
-      ? "Товар приносит прибыль"
+      ? ""
       : result.profit < 0
         ? "Продажа приводит к убытку"
         : "Продажа без прибыли";
