@@ -1,0 +1,884 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#e53935">
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="icon" type="image/png" href="./icons/icon-192.png">
+<link rel="apple-touch-icon" href="./icons/icon-192.png">
+<title>Kaspi Profit</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#f4f6fa;color:#202735}
+.container{max-width:1150px;margin:auto;padding:26px 16px}
+header{margin-bottom:24px}
+.logo{font-size:29px;font-weight:800;letter-spacing:-1px}
+.logo span{color:#e53935}
+.subtitle{color:#697386;margin-top:7px;font-size:14px}
+.layout{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.card{background:white;border-radius:15px;padding:22px;box-shadow:0 4px 18px #1e2d460d;min-width:0}
+h2{font-size:17px;margin:0 0 20px}
+.field{margin-bottom:15px}
+label{display:block;font-size:13px;color:#596477;margin-bottom:7px}
+input,select{width:100%;padding:11px 12px;border:1px solid #dce1e9;border-radius:9px;font-size:15px;background:white;color:#202735}
+input:focus,select:focus{outline:2px solid #e5393530;border-color:#e53935}
+.input-wrap{position:relative}
+.input-wrap input{padding-right:44px}
+.unit{position:absolute;right:12px;top:12px;color:#8992a1;font-size:13px}
+input[readonly]{background:#f5f6f8}
+.result-main{background:#f0f8f2;border-radius:12px;padding:17px;margin-bottom:15px}
+.result-label{color:#55705d;font-size:13px}
+.profit{font-size:32px;font-weight:800;margin-top:8px;color:#168348;overflow-wrap:anywhere}
+.negative{color:#d92d20!important}
+.status{font-size:13px;margin-top:10px;font-weight:600}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.stat{background:#f6f7fa;border-radius:10px;padding:13px}
+.stat-label{color:#697386;font-size:12px;margin-bottom:7px}
+.stat-value{font-size:18px;font-weight:700;overflow-wrap:anywhere}
+.divider{border:0;border-top:1px solid #edf0f4;margin:20px 0}
+.target-box{background:#fff7ed;border-radius:12px;padding:16px;margin-top:18px}
+.target-box h3{font-size:15px;margin:0 0 14px}
+.target-result{font-size:13px;color:#7c4a12;line-height:1.5}
+.target-price{font-size:24px;font-weight:800;margin:5px 0}
+.buttons{display:flex;gap:9px;flex-wrap:wrap;margin-top:18px}
+button{border:0;border-radius:9px;padding:12px 15px;font-size:14px;font-weight:700;cursor:pointer}
+.primary{background:#e53935;color:white}
+.primary:hover{background:#c92f2c}
+.secondary{background:#edf0f5;color:#344054}
+.danger{background:#fff0ef;color:#c92f2c}
+button:disabled{opacity:.5;cursor:not-allowed}
+.note{font-size:12px;color:#778092;line-height:1.5;margin-top:16px}
+.section{margin-top:22px}
+.section-head{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+.section-head h2{margin:0}
+.count{color:#697386;font-size:13px}
+.table-wrap{overflow-x:auto;background:white;border-radius:13px;box-shadow:0 4px 18px #1e2d460d}
+table{width:100%;border-collapse:collapse;min-width:760px}
+th,td{padding:13px 14px;text-align:left;border-bottom:1px solid #edf0f4;font-size:13px;white-space:nowrap}
+th{background:#f8f9fb;color:#667085;font-weight:600}
+tr:last-child td{border-bottom:0}
+td:first-child{font-weight:700;white-space:normal;min-width:145px}
+.profit-cell{font-weight:700;color:#168348}
+.row-actions{display:flex;gap:6px}
+.small-btn{padding:7px 9px;font-size:12px}
+.empty{text-align:center;color:#778092;padding:28px;background:white;border-radius:13px}
+.tax-info{font-size:13px;color:#596477;line-height:1.5;margin-top:12px}
+.backup-ok{color:#168348}
+.backup-error{color:#c92f2c}
+
+.monthly-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.monthly-box{background:#fff;border-radius:15px;padding:20px;box-shadow:0 4px 18px #1e2d460d}
+.monthly-box h3{font-size:16px;margin:0 0 15px}
+.monthly-highlight{background:#f0f8f2;border-radius:12px;padding:15px;margin-top:14px}
+.monthly-highlight.orange{background:#fff7ed}
+.monthly-label{font-size:12px;color:#697386}
+.monthly-value{font-size:26px;font-weight:800;margin-top:6px}
+.monthly-value.green{color:#168348}
+.monthly-value.orange-text{color:#9a5b12}
+.monthly-stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+@media(max-width:760px){.monthly-grid{grid-template-columns:1fr}}
+
+@media(max-width:760px){.layout{grid-template-columns:1fr}.container{padding:18px 11px}.card{padding:17px}.profit{font-size:29px}}
+
+/* Удобное управление на телефоне */
+button{min-height:44px;touch-action:manipulation}
+input,select{min-height:46px}
+@media(max-width:760px){
+ body{background:#f3f5f9}
+ .container{padding:16px 12px 32px}
+ header{margin-bottom:18px}
+ .logo{font-size:27px}
+ .subtitle{line-height:1.45}
+ .layout,.monthly-grid{gap:14px}
+ .card,.monthly-box{padding:18px;border-radius:14px}
+ h2{font-size:18px;margin-bottom:18px}
+ .field{margin-bottom:17px}
+ label{font-size:14px}
+ input,select{font-size:16px;min-height:49px;padding:12px 13px}
+ .unit{top:16px}
+ .buttons{display:grid;grid-template-columns:1fr;gap:9px}
+ .buttons button{width:100%;min-height:49px;font-size:15px}
+ .result-main{padding:19px}
+ .profit{font-size:34px}
+ .stat{padding:12px 10px}
+ .stat-value{font-size:17px}
+ .stat-label{line-height:1.4}
+ .target-price,.monthly-value{font-size:26px;overflow-wrap:anywhere}
+ .section{margin-top:20px}
+ .table-wrap{background:transparent;box-shadow:none;overflow:visible}
+ table,tbody{display:block;width:100%;min-width:0}
+ thead{display:none}
+ tbody tr{display:block;background:#fff;border-radius:14px;margin-bottom:12px;padding:13px 16px;box-shadow:0 4px 18px #1e2d460d}
+ tbody td{display:flex;align-items:baseline;justify-content:space-between;gap:12px;white-space:normal;padding:9px 0;border-bottom:1px solid #edf0f4;font-size:14px;text-align:right;overflow-wrap:anywhere}
+ tbody td::before{content:attr(data-label);font-size:12px;color:#697386;font-weight:400;text-align:left;flex:0 0 42%}
+ tbody td:first-child{display:block;text-align:left;font-size:17px;font-weight:800;min-width:0;padding:5px 0 13px}
+ tbody td:first-child::before{display:block;content:'Товар';margin-bottom:5px}
+ tbody td:nth-child(6){font-size:18px;font-weight:800}
+ tbody td:last-child{border:0;padding:13px 0 0;display:block}
+ tbody td:last-child::before{display:none}
+ .row-actions{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+ .small-btn{min-height:44px;font-size:14px}
+}
+/* Сворачиваемые разделы: видны заголовки, параметры открываются по нажатию */
+.fold{min-width:0}
+.fold > summary{list-style:none;display:flex;align-items:center;justify-content:space-between;gap:10px;cursor:pointer;font-size:16px;font-weight:750;line-height:1.3;min-height:48px;touch-action:manipulation}
+.fold > summary::-webkit-details-marker{display:none}
+.fold > summary::after{content:"⌄";color:#697386;font-size:23px;line-height:1;flex:none;transition:transform .15s ease}
+.fold[open] > summary::after{transform:rotate(180deg)}
+.fold > summary:focus-visible{outline:2px solid #e53935;outline-offset:4px;border-radius:6px}
+.fold > .fold-body{padding-top:16px}
+.fold-settings{background:#f6f7fa;border:1px solid #e7eaf1;border-radius:12px;padding:3px 15px;margin-bottom:16px}
+.fold-settings > summary{font-size:15px}
+.fold-settings .fold-body{border-top:1px solid #e3e7ef}
+.fold-hint{margin-left:auto;font-weight:400;font-size:12px;color:#697386}
+.fold-target > summary{min-height:26px;font-size:15px}
+.fold-target > .fold-body{padding-top:17px}
+.fold-monthly > summary{font-size:16px}
+.fold-monthly > .fold-body{padding-top:18px}
+.fold-products{background:#fff;border-radius:14px;box-shadow:0 4px 18px #1e2d460d;padding:6px 20px 18px}
+.fold-products > summary{font-size:17px}
+.fold-products > .fold-body{padding-top:10px}
+.fold-products .count{font-weight:400;margin-left:auto}
+.fold-products .table-wrap{box-shadow:none}
+@media(max-width:760px){
+ .fold > summary{min-height:48px}
+ .fold-settings{padding:4px 13px}
+ .fold-products{padding:6px 16px 12px}
+ .fold-products .table-wrap tbody tr{border:1px solid #edf0f4;box-shadow:none}
+ .fold-products .count{font-size:12px}
+ .monthly-box{padding:12px 18px}
+}
+/* Быстрый расчёт: те же поля и единая функция calculateAtPrice. */
+.quick-card{margin-bottom:18px}
+.quick-inputs{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px}
+.quick-inputs label{font-size:15px;font-weight:700}
+.quick-inputs input{font-size:clamp(22px,6vw,32px);font-weight:700;min-height:64px;padding:12px;width:100%}
+.quick-inputs .input-wrap input{padding-right:12px}
+.quick-card .result-main{margin:0}
+.quick-card .result-label{font-size:16px}
+.quick-card .profit{font-size:clamp(32px,8vw,46px);line-height:1.15;font-variant-numeric:tabular-nums}
+.quick-margin{font-size:18px;color:#55705d;margin-top:12px}
+.quick-margin strong{color:#202735;font-size:24px;margin-left:8px}
+.card.fold{align-self:start}
+@media(max-width:760px){
+ .container{padding:12px 12px calc(24px + env(safe-area-inset-bottom,0px))}
+ header{margin-bottom:14px}.subtitle{display:none}
+ .quick-card{padding:16px;margin-bottom:14px}
+ .quick-inputs{gap:10px}.quick-inputs .field{margin-bottom:14px}
+ .quick-card .result-main{padding:16px}
+ .card.fold{padding:6px 16px 12px}
+}
+</style>
+  <script src="./vendor/xlsx.full.min.js"></script>
+</head>
+<body>
+<div class="container">
+<header>
+  <div class="logo">Kaspi <span>Profit</span></div>
+  <div class="subtitle">Прибыль, расходы и сравнение товаров в одном месте</div>
+</header>
+
+<section class="card quick-card" id="profitResults" aria-label="Быстрый расчёт">
+<div class="quick-inputs"><div class="field">
+<label for="cost">Закупка, ₸</label>
+<div class="input-wrap"><input id="cost" type="number" inputmode="decimal" min="0" step="1" value="4350"></div>
+</div><div class="field">
+<label for="sale">Продажа, ₸</label>
+<div class="input-wrap"><input id="sale" type="number" inputmode="decimal" min="0" step="1" value="8000"></div>
+</div></div>
+<div class="result-main">
+<div class="result-label">Чистая прибыль</div>
+<div role="status" aria-live="polite" aria-atomic="true" class="profit" id="profit">—</div>
+<div class="quick-margin">Маржа <strong id="margin">—</strong></div>
+<div class="status" id="status"></div>
+</div>
+</section>
+
+<div class="layout">
+<details class="card fold"><summary>Товар и параметры расчёта</summary><div class="fold-body">
+
+<div class="field">
+<label for="product">Название товара</label>
+<input id="product" type="text" placeholder="Например, карандаши цветные">
+</div>
+
+
+
+
+
+<details class="fold fold-settings">
+<summary>Комиссия и доставка <span class="fold-hint">Настроить</span></summary>
+<div class="fold-body">
+<div class="field">
+<label for="commission">Комиссия Kaspi</label>
+<div class="input-wrap"><input id="commission" type="number" inputmode="decimal" min="0" max="99.99" step="0.1" value="12.5"><span class="unit">%</span></div>
+</div>
+
+<div class="field">
+<label for="deliveryType">Способ доставки</label>
+<select id="deliveryType">
+<option value="kz">По Казахстану</option>
+<option value="city">По городу</option>
+<option value="express">Express-доставка</option>
+</select>
+</div>
+
+<div class="field">
+<label for="weight">Вес с упаковкой (для заказов от 10 000 ₸)</label>
+<select id="weight">
+<option value="5">До 5 кг</option>
+<option value="15">5–15 кг</option>
+<option value="30">15–30 кг</option>
+<option value="60">30–60 кг</option>
+<option value="101">Свыше 100 кг</option>
+</select>
+</div>
+
+<div class="field">
+<label for="delivery">Доставка — автоматически, с НДС 16%</label>
+<div class="input-wrap"><input id="delivery" type="number" inputmode="decimal" readonly><span class="unit">₸</span></div>
+</div>
+
+</div>
+</details>
+
+<div class="field">
+<label for="ads">Реклама на одну продажу</label>
+<div class="input-wrap"><input id="ads" type="number" inputmode="decimal" min="0" step="1" value="0"><span class="unit">₸</span></div>
+</div>
+
+<div class="field">
+<label for="other">Другие расходы на одну продажу</label>
+<div class="input-wrap"><input id="other" type="number" inputmode="decimal" min="0" step="1" value="0"><span class="unit">₸</span></div>
+</div>
+
+<div class="buttons">
+<button class="primary" id="saveBtn">Сохранить товар</button>
+<button class="secondary" id="newBtn">Новый товар</button>
+</div>
+<div class="note" id="saveMessage">Сохранённые товары хранятся в этом браузере на этом устройстве.</div>
+<div class="buttons" style="margin-top:12px">
+  <button class="secondary" id="exportExcelBtn">Экспорт в Excel</button>
+  <button class="secondary" id="importExcelBtn">Импорт из Excel</button>
+  <input id="importExcelInput" type="file" accept=".xlsx,.xls" style="display:none">
+</div>
+<div class="note" id="backupMessage">
+  Excel-файл содержит весь сохранённый ассортимент. При импорте данные проходят проверку перед добавлением.
+</div>
+
+</div></details>
+
+<details class="card fold"><summary>Расходы и желаемая прибыль</summary><div class="fold-body">
+
+
+
+<div class="stats">
+<div class="stat"><div class="stat-label">Комиссия Kaspi</div><div class="stat-value" id="commissionSum">—</div></div>
+<div class="stat"><div class="stat-label">Налоговый резерв 3%</div><div class="stat-value" id="taxSum">—</div></div>
+<div class="stat"><div class="stat-label">Доставка с НДС 16%</div><div class="stat-value" id="deliverySum">—</div></div>
+<div class="stat"><div class="stat-label">Все расходы с налогом</div><div class="stat-value" id="expenses">—</div></div>
+
+<div class="stat"><div class="stat-label">Наценка на закупку</div><div class="stat-value" id="markup">—</div></div>
+</div>
+
+<details class="target-box fold fold-target">
+<summary>Цена для желаемой прибыли</summary>
+<div class="fold-body">
+<div class="field">
+<label for="target">Сколько хочешь зарабатывать с продажи</label>
+<div class="input-wrap"><input id="target" type="number" inputmode="decimal" min="0" step="1" value="3000"><span class="unit">₸</span></div>
+</div>
+<div class="target-result">
+Минимальная рекомендуемая цена:
+<div class="target-price" id="targetPrice">—</div>
+<div id="targetDetails">Учитывает комиссию, доставку и налоговый резерв.</div>
+</div>
+</div>
+</details>
+
+<div class="tax-info">
+Налоговый резерв рассчитан как 3% от цены продажи, а не от прибыли. Это предварительная модель для выбранной ставки и налогового режима. Проверь ставку и правила применения своего налогового режима.
+</div>
+<div class="note">Расчёт включает только указанные расходы. Возвраты, скидки и прочие затраты нужно учитывать отдельно, если они применимы.</div>
+</div></details>
+</div>
+
+<div class="section">
+<div class="section-head">
+<h2>Финансы за месяц</h2>
+<div class="count" id="monthlyProductsInfo">По сохранённому ассортименту</div>
+</div>
+<div class="monthly-grid">
+  <details class="monthly-box fold fold-monthly">
+    <summary>Факт за месяц</summary>
+    <div class="fold-body">
+    <div class="field">
+      <label for="monthlyRevenue">Выручка за месяц</label>
+      <div class="input-wrap"><input id="monthlyRevenue" type="number" inputmode="decimal" min="0" step="1" value="0"><span class="unit">₸</span></div>
+    </div>
+    <div class="monthly-highlight">
+      <div class="monthly-label">Средняя маржа сохранённых товаров</div>
+      <div class="monthly-value green" id="averageMargin">—</div>
+    </div>
+    <div class="monthly-highlight">
+      <div class="monthly-label">Расчётная прибыль за месяц</div>
+      <div class="monthly-value green" id="monthlyProfit">—</div>
+    </div>
+    <div class="note">Это ориентировочная прибыль: выручка умножается на среднюю маржу сохранённого ассортимента. Фактический результат может отличаться, если продажи распределены неравномерно между товарами.</div>
+    </div>
+  </details>
+
+  <details class="monthly-box fold fold-monthly">
+    <summary>Цель по прибыли за месяц</summary>
+    <div class="fold-body">
+    <div class="field">
+      <label for="targetMonthlyProfit">Сколько хочешь заработать за месяц</label>
+      <div class="input-wrap"><input id="targetMonthlyProfit" type="number" inputmode="decimal" min="0" step="1" value="500000"><span class="unit">₸</span></div>
+    </div>
+    <div class="monthly-highlight orange">
+      <div class="monthly-label">Нужная выручка для цели</div>
+      <div class="monthly-value orange-text" id="targetMonthlyRevenue">—</div>
+    </div>
+    <div class="monthly-stats">
+      <div class="stat"><div class="stat-label">Цель прибыли</div><div class="stat-value" id="targetMonthlyProfitValue">—</div></div>
+      <div class="stat"><div class="stat-label">Средняя маржа</div><div class="stat-value" id="targetMonthlyMargin">—</div></div>
+    </div>
+    <div class="note">Расчёт показывает, какую выручку нужно получить при текущей средней марже. Чем точнее ассортимент и его маржа отражают реальные продажи, тем полезнее прогноз.</div>
+    </div>
+  </details>
+</div>
+</div>
+
+<details class="section fold fold-products">
+<summary>Мои товары <span class="count" id="count">0 товаров</span></summary>
+<div class="fold-body">
+<div id="productsArea"></div>
+<div class="note">Нажми «Открыть», чтобы загрузить товар в калькулятор. После изменения нажми «Сохранить товар», чтобы обновить его данные.</div>
+</div>
+</details>
+</div>
+
+<script>
+const $ = id => document.getElementById(id);
+const fieldIds = ["product","sale","cost","commission","deliveryType","weight","ads","other","target","monthlyRevenue","targetMonthlyProfit"];
+let products = [];
+let editingId = null;
+
+try {
+  products = JSON.parse(localStorage.getItem("kaspiProfitProducts") || "[]");
+  if (!Array.isArray(products)) products = [];
+} catch (e) {
+  products = [];
+}
+
+function num(id) {
+  return Math.max(0, Number($(id).value) || 0);
+}
+function money(value) {
+  return Math.round(value).toLocaleString("ru-RU") + " ₸";
+}
+function pct(value) {
+  return value.toLocaleString("ru-RU", {
+    minimumFractionDigits: 1,
+    maximumFractionDigits: 1
+  }) + "%";
+}
+
+const DELIVERY_VAT_MULTIPLIER = 1.16; // Тарифы указаны без НДС; добавляем 16% НДС
+
+function getDelivery(price, type, weight) {
+  if (price <= 0) return 0;
+  if (price <= 1000) return Math.round(49 * DELIVERY_VAT_MULTIPLIER);
+  if (price <= 3000) return Math.round(149 * DELIVERY_VAT_MULTIPLIER);
+  if (price <= 5000) return Math.round(199 * DELIVERY_VAT_MULTIPLIER);
+
+  if (price <= 10000) {
+    if (type === "city") return Math.round(699 * DELIVERY_VAT_MULTIPLIER);
+    return Math.round(799 * DELIVERY_VAT_MULTIPLIER);
+  }
+
+  const tariffs = {
+    kz:      {5:1299, 15:1699, 30:3599, 60:5649, 101:11999},
+    city:    {5:1099, 15:1349, 30:2299, 60:2899, 101:6449},
+    express: {5:1699, 15:1849, 30:3149, 60:3599, 101:8449}
+  };
+  const tariff = tariffs[type][weight] ?? 0;
+  return Math.round(tariff * DELIVERY_VAT_MULTIPLIER);
+}
+
+function calculateAtPrice(price, data) {
+  const commission = price * data.commission / 100;
+  const tax = price * 0.03;
+  const delivery = getDelivery(price, data.deliveryType, data.weight);
+  const expenses = data.cost + commission + tax + delivery + data.ads + data.other;
+  return {
+    price,
+    commission,
+    tax,
+    delivery,
+    expenses,
+    profit: price - expenses,
+    margin: price > 0 ? (price - expenses) / price * 100 : 0
+  };
+}
+
+function readForm() {
+  return {
+    name: $("product").value.trim(),
+    sale: num("sale"),
+    cost: num("cost"),
+    commission: Math.min(99.99, num("commission")),
+    deliveryType: $("deliveryType").value,
+    weight: Number($("weight").value),
+    ads: num("ads"),
+    other: num("other"),
+    target: num("target")
+  };
+}
+
+function calculate() {
+  const data = readForm();
+  const result = calculateAtPrice(data.sale, data);
+  $("delivery").value = result.delivery;
+
+  $("profit").textContent = money(result.profit);
+  $("profit").classList.toggle("negative", result.profit < 0);
+  $("commissionSum").textContent = money(result.commission);
+  $("taxSum").textContent = money(result.tax);
+  $("deliverySum").textContent = money(result.delivery);
+  $("expenses").textContent = money(result.expenses);
+  $("margin").textContent = data.sale > 0 ? pct(result.margin) : "—";
+  $("markup").textContent = data.cost > 0
+    ? pct(result.profit / data.cost * 100) : "—";
+
+  $("status").textContent = data.sale <= 0
+    ? "Укажи цену продажи"
+    : result.profit > 0
+      ? "Товар приносит прибыль"
+      : result.profit < 0
+        ? "Продажа приводит к убытку"
+        : "Продажа без прибыли";
+
+  // Ищем минимальную целую цену, при которой достигается заданная прибыль.
+  let low = 1;
+  let high = 100000000;
+  const target = data.target;
+  const maxCommission = data.commission;
+
+  function profitAt(price) {
+    return calculateAtPrice(price, data).profit;
+  }
+
+  if (maxCommission + 3 < 100 && profitAt(high) >= target) {
+    while (low < high) {
+      const mid = Math.floor((low + high) / 2);
+      if (profitAt(mid) >= target) high = mid;
+      else low = mid + 1;
+    }
+    $("targetPrice").textContent = money(low);
+    $("targetDetails").textContent =
+      "Минимальная целая цена с учётом комиссии, налога 3% и тарифа доставки с НДС 16%.";
+  } else {
+    $("targetPrice").textContent = "Не удалось рассчитать";
+    $("targetDetails").textContent = "Проверь комиссию и введённые значения.";
+  }
+}
+
+function persistProducts() {
+  try {
+    localStorage.setItem("kaspiProfitProducts", JSON.stringify(products));
+    $("saveMessage").textContent = "Список сохранён в этом браузере.";
+    return true;
+  } catch (e) {
+    $("saveMessage").textContent =
+      "Не удалось сохранить список. Проверь настройки хранения браузера.";
+    return false;
+  }
+}
+
+function newProduct() {
+  editingId = null;
+  $("product").value = "";
+  $("sale").value = 0;
+  $("cost").value = 0;
+  $("commission").value = 12.5;
+  $("deliveryType").value = "kz";
+  $("weight").value = "5";
+  $("ads").value = 0;
+  $("other").value = 0;
+  $("target").value = 3000;
+  $("saveBtn").textContent = "Сохранить товар";
+  $("saveMessage").textContent = "Заполни данные и сохрани товар в список.";
+  calculate();
+}
+
+function saveProduct() {
+  const data = readForm();
+  if (!data.name) {
+    $("saveMessage").textContent = "Сначала укажи название товара.";
+    $("product").focus();
+    return;
+  }
+  if (data.sale <= 0) {
+    $("saveMessage").textContent = "Укажи цену продажи больше нуля.";
+    $("sale").focus();
+    return;
+  }
+
+  const record = {
+    id: editingId || (Date.now().toString(36) + Math.random().toString(36).slice(2,8)),
+    ...data
+  };
+
+  const index = products.findIndex(p => p.id === record.id);
+  if (index >= 0) products[index] = record;
+  else products.push(record);
+
+  if (!persistProducts()) return;
+  editingId = record.id;
+  $("saveBtn").textContent = "Обновить товар";
+  renderProducts();
+  calculateMonthlyFinance();
+}
+
+function loadProduct(id) {
+  const p = products.find(item => item.id === id);
+  if (!p) return;
+  editingId = p.id;
+  $("product").value = p.name || "";
+  $("sale").value = p.sale ?? 0;
+  $("cost").value = p.cost ?? 0;
+  $("commission").value = p.commission ?? 12.5;
+  $("deliveryType").value = p.deliveryType || "kz";
+  $("weight").value = String(p.weight || 5);
+  $("ads").value = p.ads ?? 0;
+  $("other").value = p.other ?? 0;
+  $("target").value = p.target ?? 3000;
+  $("saveBtn").textContent = "Обновить товар";
+  $("saveMessage").textContent = "Товар загружен. После изменений нажми «Обновить товар».";
+  calculate();
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+function deleteProduct(id) {
+  const p = products.find(item => item.id === id);
+  if (!p) return;
+  if (!confirm('Удалить товар "' + p.name + '" из списка?')) return;
+
+  products = products.filter(item => item.id !== id);
+  if (editingId === id) newProduct();
+  persistProducts();
+  renderProducts();
+  calculateMonthlyFinance();
+}
+
+function renderProducts() {
+  $("count").textContent = products.length + (
+    products.length === 1 ? " товар" :
+    products.length >= 2 && products.length <= 4 ? " товара" : " товаров"
+  );
+
+  const area = $("productsArea");
+  area.replaceChildren();
+  calculateMonthlyFinance();
+
+  if (!products.length) {
+    const empty = document.createElement("div");
+    empty.className = "empty";
+    empty.textContent = "Пока нет сохранённых товаров. Заполни калькулятор и нажми «Сохранить товар».";
+    area.appendChild(empty);
+    return;
+  }
+
+  const wrap = document.createElement("div");
+  wrap.className = "table-wrap";
+  const table = document.createElement("table");
+  const thead = document.createElement("thead");
+  const headerRow = document.createElement("tr");
+
+  ["Товар","Цена продажи","Закупка","Доставка","Налог 3%","Прибыль после налога","Маржа","Действия"]
+    .forEach(label => {
+      const th = document.createElement("th");
+      th.textContent = label;
+      headerRow.appendChild(th);
+    });
+  thead.appendChild(headerRow);
+  table.appendChild(thead);
+
+  const tbody = document.createElement("tbody");
+
+  products
+    .map(p => ({p, r: calculateAtPrice(Number(p.sale)||0, {
+      cost: Number(p.cost)||0,
+      commission: Number(p.commission)||0,
+      deliveryType: p.deliveryType || "kz",
+      weight: Number(p.weight)||5,
+      ads: Number(p.ads)||0,
+      other: Number(p.other)||0
+    })}))
+    .sort((a,b) => b.r.profit - a.r.profit)
+    .forEach(({p,r}) => {
+      const tr = document.createElement("tr");
+      const values = [
+        p.name || "Без названия",
+        money(r.price),
+        money(Number(p.cost)||0),
+        money(r.delivery),
+        money(r.tax),
+        money(r.profit),
+        r.price > 0 ? pct(r.margin) : "—"
+      ];
+
+      values.forEach((value,i) => {
+        const td = document.createElement("td");
+        td.textContent = value;
+        td.dataset.label = ["Товар","Цена продажи","Закупка","Доставка","Налог 3%","Прибыль после налога","Маржа"][i];
+        if (i === 5) td.className = r.profit < 0 ? "negative" : "profit-cell";
+        tr.appendChild(td);
+      });
+
+      const actions = document.createElement("td");
+      actions.dataset.label = "Действия";
+      const group = document.createElement("div");
+      group.className = "row-actions";
+
+      const openBtn = document.createElement("button");
+      openBtn.className = "secondary small-btn";
+      openBtn.textContent = "Открыть";
+      openBtn.addEventListener("click", () => loadProduct(p.id));
+
+      const deleteBtn = document.createElement("button");
+      deleteBtn.className = "danger small-btn";
+      deleteBtn.textContent = "Удалить";
+      deleteBtn.addEventListener("click", () => deleteProduct(p.id));
+
+      group.append(openBtn,deleteBtn);
+      actions.appendChild(group);
+      tr.appendChild(actions);
+      tbody.appendChild(tr);
+    });
+
+  table.appendChild(tbody);
+  wrap.appendChild(table);
+  area.appendChild(wrap);
+}
+
+
+
+function calculateMonthlyFinance() {
+  const validProducts = products.filter(p => Number(p.sale) > 0);
+  const margins = validProducts.map(p => {
+    const r = calculateAtPrice(Number(p.sale) || 0, {
+      cost: Number(p.cost) || 0,
+      commission: Number(p.commission) || 0,
+      deliveryType: p.deliveryType || "kz",
+      weight: Number(p.weight) || 5,
+      ads: Number(p.ads) || 0,
+      other: Number(p.other) || 0
+    });
+    return r.margin;
+  });
+
+  const average = margins.length
+    ? margins.reduce((sum, value) => sum + value, 0) / margins.length
+    : 0;
+
+  $("monthlyProductsInfo").textContent = validProducts.length
+    ? validProducts.length + " товар" + (validProducts.length === 1 ? "" : validProducts.length <= 4 ? "а" : "ов")
+    : "Нет сохранённых товаров";
+  $("averageMargin").textContent = validProducts.length ? pct(average) : "—";
+  $("targetMonthlyMargin").textContent = validProducts.length ? pct(average) : "—";
+
+  const revenue = num("monthlyRevenue");
+  const monthlyProfit = revenue * average / 100;
+  $("monthlyProfit").textContent = validProducts.length ? money(monthlyProfit) : "—";
+
+  const targetProfit = num("targetMonthlyProfit");
+  $("targetMonthlyProfitValue").textContent = money(targetProfit);
+  $("targetMonthlyRevenue").textContent = validProducts.length && average > 0
+    ? money(targetProfit / (average / 100))
+    : "—";
+}
+
+function setBackupMessage(text, ok = true) {
+  const el = $("backupMessage");
+  el.textContent = text;
+  el.className = "note " + (ok ? "backup-ok" : "backup-error");
+}
+
+function normalizeImportedProduct(row, index) {
+  const name = String(row.name ?? row["Название товара"] ?? "").trim();
+  const sale = Number(row.sale ?? row["Цена продажи"] ?? 0);
+  const cost = Number(row.cost ?? row["Закупочная стоимость"] ?? 0);
+  const commission = Number(row.commission ?? row["Комиссия Kaspi, %"] ?? 12.5);
+  const deliveryTypeRaw = String(row.deliveryType ?? row["Способ доставки"] ?? "kz").trim().toLowerCase();
+  const deliveryMap = {
+    kz: "kz",
+    "по казахстану": "kz",
+    city: "city",
+    "по городу": "city",
+    express: "express",
+    "express-доставка": "express"
+  };
+  const deliveryType = deliveryMap[deliveryTypeRaw] || "kz";
+  const weight = Number(row.weight ?? row["Вес, кг"] ?? 5);
+  const ads = Number(row.ads ?? row["Реклама"] ?? 0);
+  const other = Number(row.other ?? row["Другие расходы"] ?? 0);
+  const target = Number(row.target ?? row["Желаемая прибыль"] ?? 3000);
+
+  const validWeights = [5, 15, 30, 60, 101];
+  const errors = [];
+
+  if (!name) errors.push("нет названия");
+  if (!Number.isFinite(sale) || sale <= 0) errors.push("некорректная цена продажи");
+  if (!Number.isFinite(cost) || cost < 0) errors.push("некорректная закупочная стоимость");
+  if (!Number.isFinite(commission) || commission < 0 || commission > 99.99) errors.push("некорректная комиссия");
+  if (!validWeights.includes(weight)) errors.push("некорректный вес");
+  if (!Number.isFinite(ads) || ads < 0) errors.push("некорректная реклама");
+  if (!Number.isFinite(other) || other < 0) errors.push("некорректные другие расходы");
+  if (!Number.isFinite(target) || target < 0) errors.push("некорректная желаемая прибыль");
+
+  if (errors.length) {
+    return {error: "Строка " + (index + 2) + ": " + errors.join(", ")};
+  }
+
+  return {
+    id: String(row.id ?? "").trim() || (Date.now().toString(36) + Math.random().toString(36).slice(2,8)),
+    name,
+    sale: Math.round(sale),
+    cost: Math.round(cost),
+    commission: Math.min(99.99, commission),
+    deliveryType,
+    weight,
+    ads: Math.round(ads),
+    other: Math.round(other),
+    target: Math.round(target)
+  };
+}
+
+function exportExcel() {
+  if (typeof XLSX === "undefined") {
+    setBackupMessage("Не удалось загрузить локальный модуль Excel. Перезагрузи приложение.", false);
+    return;
+  }
+
+  const rows = products.map(p => ({
+    id: p.id || "",
+    "Название товара": p.name || "",
+    "Цена продажи": Number(p.sale) || 0,
+    "Закупочная стоимость": Number(p.cost) || 0,
+    "Комиссия Kaspi, %": Number(p.commission) || 0,
+    "Способ доставки": p.deliveryType || "kz",
+    "Вес, кг": Number(p.weight) || 5,
+    "Реклама": Number(p.ads) || 0,
+    "Другие расходы": Number(p.other) || 0,
+    "Желаемая прибыль": Number(p.target) || 0
+  }));
+
+  const worksheet = XLSX.utils.json_to_sheet(rows);
+  worksheet["!cols"] = [
+    {wch: 28},{wch: 14},{wch: 20},{wch: 18},{wch: 18},
+    {wch: 18},{wch: 12},{wch: 14},{wch: 18},{wch: 20}
+  ];
+
+  const workbook = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(workbook, worksheet, "Товары");
+  XLSX.writeFile(workbook, "KaspiProfit_товары.xlsx");
+  setBackupMessage("Экспорт завершён: сохранён файл KaspiProfit_товары.xlsx", true);
+}
+
+function importExcel(file) {
+  if (!file) return;
+
+  if (typeof XLSX === "undefined") {
+    setBackupMessage("Не удалось загрузить локальный модуль Excel. Перезагрузи приложение.", false);
+    return;
+  }
+
+  const reader = new FileReader();
+
+  reader.onload = function(e) {
+    try {
+      const workbook = XLSX.read(e.target.result, {type: "array"});
+      const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
+      if (!firstSheet) throw new Error("В файле нет листов.");
+
+      const rows = XLSX.utils.sheet_to_json(firstSheet, {defval: ""});
+      if (!rows.length) throw new Error("В Excel нет строк с товарами.");
+
+      const imported = [];
+      const errors = [];
+
+      rows.forEach((row, index) => {
+        const result = normalizeImportedProduct(row, index);
+        if (result.error) errors.push(result.error);
+        else imported.push(result);
+      });
+
+      if (!imported.length) {
+        throw new Error("Не найдено ни одной корректной строки для импорта.");
+      }
+
+      // Existing products with the same id are updated; new products are added.
+      const existingById = new Map(products.map(p => [String(p.id), p]));
+      imported.forEach(p => existingById.set(String(p.id), p));
+      products = Array.from(existingById.values());
+
+      if (!persistProducts()) throw new Error("Не удалось сохранить импортированные товары.");
+
+      editingId = null;
+      renderProducts();
+      calculate();
+      calculateMonthlyFinance();
+
+      if (errors.length) {
+        setBackupMessage(
+          "Импортировано " + imported.length + " товаров. Пропущено строк: " +
+          errors.length + ". Пример: " + errors[0],
+          true
+        );
+      } else {
+        setBackupMessage("Импорт завершён: добавлено/обновлено " + imported.length + " товаров.", true);
+      }
+    } catch (err) {
+      setBackupMessage("Ошибка импорта: " + (err.message || "неизвестная ошибка"), false);
+    }
+  };
+
+  reader.onerror = function() {
+    setBackupMessage("Не удалось прочитать Excel-файл.", false);
+  };
+
+  reader.readAsArrayBuffer(file);
+}
+
+fieldIds.filter(id => !["product","monthlyRevenue","targetMonthlyProfit"].includes(id)).forEach(id => {
+  $(id).addEventListener("input", calculate);
+  $(id).addEventListener("change", calculate);
+});
+
+// Месячные показатели должны пересчитываться сразу при вводе цифр.
+["monthlyRevenue","targetMonthlyProfit"].forEach(id => {
+  $(id).addEventListener("input", calculateMonthlyFinance);
+  $(id).addEventListener("change", calculateMonthlyFinance);
+});
+$("saveBtn").addEventListener("click", saveProduct);
+$("newBtn").addEventListener("click", newProduct);
+
+$("exportExcelBtn").addEventListener("click", exportExcel);
+$("importExcelBtn").addEventListener("click", () => $("importExcelInput").click());
+$("importExcelInput").addEventListener("change", e => {
+  importExcel(e.target.files[0]);
+  e.target.value = "";
+});
+
+
+calculate();
+renderProducts();
+calculateMonthlyFinance();
+</script>
+<script src="./pwa.js"></script>
+</body>
+</html>
